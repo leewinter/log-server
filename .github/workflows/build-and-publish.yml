@@ -38,6 +38,3 @@ jobs:
         uses: actions/docker/cli@master
         with:
           args: push leewinter/logserver
-      
-      env:
-        CI: true
