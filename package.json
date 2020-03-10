@@ -1,0 +1,27 @@
+{
+  "name": "logviewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "npm install --ignore-scripts",
+    "start": "nodemon server/index.js"
+  },
+  "author": "Lee Winter",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
+    "eslint": "~3.8.0",
+    "eslint-config-airbnb-base": "^4.0.0",
+    "eslint-config-bravissimo": "^1.0.1",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-import": "^1.6.0",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "loadash": "^1.0.0",
+    "nodemon": "^2.0.2",
+    "socket.io": "^2.3.0"
+  }
+}
