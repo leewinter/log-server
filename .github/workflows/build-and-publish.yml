@@ -16,15 +16,13 @@ jobs:
         node-version: [10.x, 12.x]
 
     steps:
-      - uses: actions/checkout@master
-      - name: npm install
-        uses: actions/npm@master
+      - uses: actions/checkout@v2
+      - name: npm install ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          args: install
-      - name: npm test
-        uses: actions/npm@master
-        with:
-          args: run test
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm test
       - name: docker build
         uses: actions/docker/cli@master
         with:
