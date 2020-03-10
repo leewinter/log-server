@@ -1,0 +1,9 @@
+#log-view {
+  overflow: auto; 
+  height:550px
+}
+
+#myChart {
+  height: 400px;
+  overflow: auto;
+}
