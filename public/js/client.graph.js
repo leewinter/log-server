@@ -3,7 +3,7 @@ let myChart;
 $(document).ready(function() {
   let ctx = document.getElementById('myChart');
   myChart = new Chart(ctx, {
-docker image     type: 'horizontalBar',
+    type: 'horizontalBar',
     data: {
       labels: allLogLevels,
       datasets: [
