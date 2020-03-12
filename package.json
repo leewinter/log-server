@@ -2,11 +2,12 @@
   "name": "logviewer",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Fix test result for now\" && exit 0",
     "preinstall": "npm install --ignore-scripts",
-    "start": "nodemon server/index.js"
+    "start": "nodemon -r esm server/index.js"
   },
   "author": "Lee Winter",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "eslint-config-bravissimo": "^1.0.1",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-import": "^1.6.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "loadash": "^1.0.0",

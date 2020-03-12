@@ -1,4 +1,4 @@
-const io = require('socket.io');
+import io from 'socket.io';
 
 // Browsers and APIs
 let connectedClients = new Map();
@@ -86,4 +86,4 @@ const init = port => {
   });
 };
 
-module.exports = { init };
+export default init;
