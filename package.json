@@ -2,12 +2,13 @@
   "name": "logviewer",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Fix test result for now\" && exit 0",
     "preinstall": "npm install --ignore-scripts",
-    "start": "nodemon -r esm server/index.js"
+    "start:clients": "nodemon -r esm lib/examples/dev-launcher/index.js",
+    "start:dev": "parallelshell \"npm start\" \"npm run start:clients\"",
+    "start": "node -r esm server/index.js"
   },
   "author": "Lee Winter",
   "license": "ISC",
@@ -25,5 +26,14 @@
     "loadash": "^1.0.0",
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "date-fns": "^2.10.0",
+    "parallelshell": "^3.0.1",
+    "socket.io-client": "^2.3.0",
+    "strip-ansi": "^6.0.0",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2",
+    "winston-transport": "^4.3.0"
   }
 }

@@ -7,3 +7,8 @@
   height: 200px;
   overflow: auto;
 }
+
+#api-event-list {
+  overflow: auto; 
+  height:400px;
+}

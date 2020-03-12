@@ -25,6 +25,7 @@ app.use('/jquery', express.static(jQuery));
 app.use('/bootstrap', express.static(bootstrap));
 app.use('/', express.static(publicDirectory));
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log('listening on *:3000');
+const serverPort = process.env.PORT || 3000;
+server.listen(serverPort, () => {
+  console.log(`listening on *:${serverPort}`);
 });
