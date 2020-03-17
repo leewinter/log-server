@@ -1,3 +1,8 @@
-<p>dashboard works!</p>
-
-<app-log-stream></app-log-stream>
+<mat-grid-list cols="4">
+    <mat-grid-tile colspan="3">
+        <app-log-stream></app-log-stream>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1">
+        <app-log-level-filter></app-log-level-filter>
+    </mat-grid-tile>
+</mat-grid-list>
