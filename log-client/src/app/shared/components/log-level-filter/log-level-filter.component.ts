@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LogLevelService } from '../../services/log-level.service';
+import { MatSelectionListChange } from '@angular/material/list/selection-list';
 
 @Component({
   selector: 'app-log-level-filter',
@@ -8,14 +9,19 @@ import { LogLevelService } from '../../services/log-level.service';
 })
 export class LogLevelFilterComponent implements OnInit {
   logLevels: string[];
+  selectedOptions: string[];
+  @Output()
+  selectedLogsChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   constructor(private logLevelService: LogLevelService) {
-    console.log('etf')
   }
 
   ngOnInit(): void {
     this.logLevels = this.logLevelService.getAll();
-    console.log(this.logLevels)
+  }
+
+  onNgModelChange(value: MatSelectionListChange) {
+    this.selectedLogsChanged.emit(this.selectedOptions);
   }
 
 }

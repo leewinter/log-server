@@ -1,5 +1,5 @@
-<mat-selection-list>
-    <mat-list-option *ngFor="let level of logLevels">
+<mat-selection-list #selectedLogs (selectionChange)="onNgModelChange($event)" [(ngModel)]="selectedOptions" multiple>
+    <mat-list-option *ngFor="let level of logLevels" [value]="level">
         {{level}}
     </mat-list-option>
 </mat-selection-list>

@@ -8,6 +8,7 @@ import { LogStreamComponent } from './components/log-stream/log-stream.component
 import { environment } from '../../environments/environment';
 import { LogLevelFilterComponent } from './components/log-level-filter/log-level-filter.component';
 import { LogLevelService } from './services/log-level.service';
+import { FormsModule } from '@angular/forms';
 
 const config: SocketIoConfig = { url: environment.logServerUrl, options: {} };
 
@@ -16,6 +17,7 @@ const config: SocketIoConfig = { url: environment.logServerUrl, options: {} };
   imports: [
     CommonModule,
     SocketIoModule.forRoot(config),
+    FormsModule,
     MatListModule,
     MatGridListModule
   ],
