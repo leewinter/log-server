@@ -1,6 +1,6 @@
 <mat-grid-list cols="4">
     <mat-grid-tile colspan="3">
-        <app-log-stream></app-log-stream>
+        <app-log-stream [(logLevelFilter)]="logLevelFilter"></app-log-stream>
     </mat-grid-tile>
     <mat-grid-tile colspan="1">
         <app-log-level-filter (selectedLogsChanged)="selectedLogsChanged($event)"></app-log-level-filter>

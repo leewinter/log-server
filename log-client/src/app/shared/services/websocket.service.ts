@@ -16,6 +16,7 @@ export class WebsocketService implements OnDestroy {
     { queueEvent: "api-disconnected", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) },
     { queueEvent: "get-connected-apis", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) }
   ];
+  logLevels: string[] = [];
 
   constructor(private socket: Socket) {
     this.messageQueues.forEach(event => {
@@ -23,21 +24,26 @@ export class WebsocketService implements OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe((msg: object | WinstonLog) => {
         this.pushWithLimit(event, this.mapQueueEvent(msg));
-        event.pushedQueue$.next(event.queue.slice(event.queueLength * -1));
+        event.pushedQueue$.next(this.logLevels.length ? event.queue.filter(n=> this.logLevels.includes(n.level)).slice(event.queueLength * -1) : event.queue.slice(event.queueLength * -1));
       });
     });
   }
 
-  restrictQueueLength(queueEvent: string, queueLength: number) {
+  restrictQueueLength(queueEvent: string, queueLength: number): EventQueue {
     const thisQueue = this.messageQueues.find(n => n.queueEvent === queueEvent);
     thisQueue.queueLength = queueLength;
     return thisQueue;
   }
 
+  filterResponse(queue: EventQueue, logLevels: string[]){
+    this.logLevels = logLevels;
+    return queue;
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-  }
+  }  
 
   private mapQueueEvent(event: any) {
     let message = event;

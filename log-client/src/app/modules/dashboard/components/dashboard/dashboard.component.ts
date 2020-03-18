@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  logLevelFilter: string[] = [];
   constructor() { }
 
   ngOnInit(): void {
   }
 
   selectedLogsChanged(event: string[]) {
-    console.log(event);
+    this.logLevelFilter = event;
   }
 
 }
