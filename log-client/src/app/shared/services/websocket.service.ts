@@ -24,7 +24,7 @@ export class WebsocketService implements OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe((msg: object | WinstonLog) => {
         this.pushWithLimit(event, this.mapQueueEvent(msg));
-        event.pushedQueue$.next(this.logLevels.length ? event.queue.filter(n=> this.logLevels.includes(n.level)).slice(event.queueLength * -1) : event.queue.slice(event.queueLength * -1));
+        this.filterAndPush(event)
       });
     });
   }
@@ -37,13 +37,18 @@ export class WebsocketService implements OnDestroy {
 
   filterResponse(queue: EventQueue, logLevels: string[]){
     this.logLevels = logLevels;
+    this.filterAndPush(queue);
     return queue;
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-  }  
+  }
+
+  private filterAndPush(eventQueue: EventQueue){
+    eventQueue.pushedQueue$.next(this.logLevels.length ? eventQueue.queue.filter(n=> this.logLevels.includes(n.level)).slice(eventQueue.queueLength * -1) : eventQueue.queue.slice(eventQueue.queueLength * -1));
+  }
 
   private mapQueueEvent(event: any) {
     let message = event;

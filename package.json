@@ -26,6 +26,7 @@
     "forever": "^2.0.0",
     "jquery": "^3.4.1",
     "loadash": "^1.0.0",
+    "moment": "^2.24.0",
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0"
   },

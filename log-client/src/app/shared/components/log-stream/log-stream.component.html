@@ -1,5 +1,10 @@
-<mat-list>
-    <mat-list-item *ngFor="let log of recentLogs">
-        {{log.timestamp}} - {{log.level}} - {{log.msg}}
+<mat-list id="logStreamView" #logStreamView>
+    <mat-list-item *ngFor="let log of recentLogs" [ngClass]="log.classes">
+        <div class="mat-small">
+            <span id="log-time">{{moment(log.timestamp).format('MMMM Do YYYY, h:mm:ss a')}} </span>
+            -
+            <span [ngClass]="['log-level', log.level]">{{log.level}}</span>
+            - <span>{{log.msg}}</span>
+        </div>
     </mat-list-item>
 </mat-list>

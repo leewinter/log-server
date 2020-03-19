@@ -1,0 +1,42 @@
+#logStreamView {
+}
+
+#log-time {
+    color: grey;
+}
+
+.recently-added {
+  animation-name: fade-background;
+  animation-duration: 2s;
+}
+
+@keyframes fade-background {
+  from {
+    background-color: rgba(216, 200, 53, 0.45);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.log-level {
+  border-radius: 4px;
+  color: black;
+  padding: 2px;
+
+  &.debug {
+    background: #6c757d;
+  }
+
+  &.info {
+    background: #17a2b8;
+  }
+
+  &.warn {
+    background: #ffc107;
+  }
+
+  &.error {
+    background: #dc3545;
+  }
+}

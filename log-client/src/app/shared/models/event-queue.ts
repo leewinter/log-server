@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import * as moment from 'moment';
 
 export class WinstonLog {
     // Instance checker
@@ -11,19 +12,21 @@ export class WinstonLog {
     }
     constructor(obj) {
         this.level = obj.level;
-        this.msg = obj.msg;
-        this.timestamp = new Date(obj.timestamp);
+        this.msg = obj.msg;        
+        this.timestamp = moment(obj.timestamp);
         this.sourceApi = obj.sourceApi;
+        this.classes = [];
     }
     level: string;
     msg: string;
-    timestamp: Date;
+    timestamp: moment.Moment;
     sourceApi: string;
+    classes: string[];
 }
 
 export interface EventQueue {
     queueEvent: string;
-    queue: any[];
+    queue: any[] | WinstonLog[];
     queueLength: number;
     pushedQueue$: BehaviorSubject<any[] | WinstonLog[]>;
 }
