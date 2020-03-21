@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
   logLevelFilter: string[] = [];
+  connectedApiFilter: string[] = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -14,6 +15,10 @@ export class DashboardComponent implements OnInit {
 
   selectedLogsChanged(event: string[]) {
     this.logLevelFilter = event;
+  }
+
+  selectedApisChanged(event: string[]){
+    this.connectedApiFilter = event;
   }
 
 }

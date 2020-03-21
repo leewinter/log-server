@@ -10,11 +10,12 @@ import { LogLevelFilterComponent } from './components/log-level-filter/log-level
 import { LogLevelService } from './services/log-level.service';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ConnectedApisComponent } from './components/connected-apis/connected-apis.component';
 
 const config: SocketIoConfig = { url: environment.logServerUrl, options: {} };
 
 @NgModule({
-  declarations: [LogStreamComponent, LogLevelFilterComponent],
+  declarations: [LogStreamComponent, LogLevelFilterComponent, ConnectedApisComponent],
   imports: [
     CommonModule,
     SocketIoModule.forRoot(config),
@@ -24,6 +25,6 @@ const config: SocketIoConfig = { url: environment.logServerUrl, options: {} };
     MatCardModule
   ],
   providers: [WebsocketService, LogLevelService],
-  exports: [LogStreamComponent, LogLevelFilterComponent, FlexLayoutModule, MatListModule, MatCardModule]
+  exports: [LogStreamComponent, LogLevelFilterComponent, ConnectedApisComponent, FlexLayoutModule, MatListModule, MatCardModule]
 })
 export class SharedModule { }

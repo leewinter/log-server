@@ -18,6 +18,8 @@ export class LogLevelFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.logLevels = this.logLevelService.getAll();
+    this.selectedOptions = this.logLevels;
+    this.selectedLogsChanged.emit(this.selectedOptions);
   }
 
   onNgModelChange(value: MatSelectionListChange) {

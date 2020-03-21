@@ -2,7 +2,7 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { EventQueue, WinstonLog } from '../models/event-queue';
+import { EventQueue, WinstonLog, ConnectedApi } from '../models/event-queue';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,10 @@ export class WebsocketService implements OnDestroy {
     { queueEvent: "winston-log", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<WinstonLog[]>([]) },
     { queueEvent: "api-connected", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) },
     { queueEvent: "api-disconnected", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) },
-    { queueEvent: "get-connected-apis", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) }
+    { queueEvent: "get-connected-apis", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<ConnectedApi[]>([]) }
   ];
   logLevels: string[] = [];
+  connectedApis: string[] = [];
 
   constructor(private socket: Socket) {
     this.messageQueues.forEach(event => {
@@ -35,10 +36,20 @@ export class WebsocketService implements OnDestroy {
     return thisQueue;
   }
 
-  filterResponse(queue: EventQueue, logLevels: string[]){
+  filterResponseViaLogLevels(queue: EventQueue, logLevels: string[]) {
     this.logLevels = logLevels;
     this.filterAndPush(queue);
     return queue;
+  }
+
+  filterResponseViaConnectedApis(queue: EventQueue, connectedApis: string[]) {    
+    this.connectedApis = connectedApis;
+    this.filterAndPush(queue);
+    return queue;
+  }
+
+  emit(eventName: string, msg: any) {
+    this.socket.emit(eventName, msg);
   }
 
   ngOnDestroy(): void {
@@ -46,20 +57,46 @@ export class WebsocketService implements OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  private filterAndPush(eventQueue: EventQueue){
-    eventQueue.pushedQueue$.next(this.logLevels.length ? eventQueue.queue.filter(n=> this.logLevels.includes(n.level)).slice(eventQueue.queueLength * -1) : eventQueue.queue.slice(eventQueue.queueLength * -1));
+  private filterAndPush(eventQueue: EventQueue) {
+    let filteredLogs = eventQueue.queue.filter(n => {
+      // Only filter log message queues
+      if (n instanceof WinstonLog) {
+        let logLevelMatch = false;
+        let connectedApiMatch = false;
+        if (this.logLevels.length) {
+          logLevelMatch = this.logLevels.includes(n.level);
+        }
+        if (this.connectedApis.length) {
+          connectedApiMatch = this.connectedApis.includes(n.sourceApi);
+        }
+        
+        return logLevelMatch && connectedApiMatch;
+      } else {
+        return true;
+      }
+    }).slice(eventQueue.queueLength * -1)
+
+    eventQueue.pushedQueue$.next(filteredLogs);
   }
 
   private mapQueueEvent(event: any) {
     let message = event;
     if (event instanceof WinstonLog) {
-      message = new WinstonLog(event)
+      message = new WinstonLog(event);
+    } else if (event instanceof ConnectedApi) {
+      message = new ConnectedApi(event);
     }
     return message;
   }
 
   private pushWithLimit(event: EventQueue, msg: any) {
-    event.queue.push(msg);
+    // Handle arrays or single objects
+    if (Array.isArray(msg)) {
+      event.queue = event.queue.concat(msg);
+    } else {
+      event.queue.push(msg);
+    }
+
     event.queue = event.queue.slice(this.internalQueueLength * -1);
   }
 

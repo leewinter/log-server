@@ -24,6 +24,18 @@ export class WinstonLog {
     classes: string[];
 }
 
+export class ConnectedApi {
+    // Instance checker
+    static [Symbol.hasInstance](obj) {
+        if (!obj.url) return false;
+        return true;
+    }
+    constructor(obj){
+        this.url = obj.url;
+    }
+    url: string;
+}
+
 export interface EventQueue {
     queueEvent: string;
     queue: any[] | WinstonLog[];

@@ -12,12 +12,16 @@ import * as moment from 'moment';
 })
 export class LogStreamComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
-  private streamListLength: number = 12;
+  private streamListLength: number = 20;
   moment: any = moment;
   recentLogs: WinstonLog[];
   @Input('logLevelFilter')
   set logLevelFilter(value) {
-    this.socketService.filterResponse(this.socketService.restrictQueueLength("winston-log", this.streamListLength), value)
+    this.socketService.filterResponseViaLogLevels(this.socketService.restrictQueueLength("winston-log", this.streamListLength), value)
+  }
+  @Input('connectedApiFilter')
+  set connectedApiFilter(value) {
+    this.socketService.filterResponseViaConnectedApis(this.socketService.restrictQueueLength("winston-log", this.streamListLength), value)
   }
 
   constructor(private socketService: WebsocketService) { }
