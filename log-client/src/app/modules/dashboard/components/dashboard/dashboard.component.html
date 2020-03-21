@@ -1,8 +1,8 @@
-<mat-grid-list cols="4" rowHeight="100%">
-    <mat-grid-tile colspan="3">
-        <app-log-stream [(logLevelFilter)]="logLevelFilter"></app-log-stream>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="1">
+<div id="main" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" >
+    <div fxFlex="30%" class="child-2">
         <app-log-level-filter (selectedLogsChanged)="selectedLogsChanged($event)"></app-log-level-filter>
-    </mat-grid-tile>
-</mat-grid-list>
+    </div>
+    <div fxFlex="70%" class="child-1">
+        <app-log-stream [(logLevelFilter)]="logLevelFilter"></app-log-stream>
+    </div>    
+</div>

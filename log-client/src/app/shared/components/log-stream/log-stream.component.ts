@@ -38,7 +38,6 @@ export class LogStreamComponent implements OnInit, OnDestroy {
 
   private highlightRecentLogs(messages: WinstonLog[]) {
     const newLogs = messages.filter(n => n.timestamp.isAfter(moment().add(-2,'seconds')) );
-    console.log(newLogs)
     messages.forEach(element => {
       if (newLogs.map(i => i.timestamp).includes(element.timestamp)) {
         element.classes.push("recently-added");

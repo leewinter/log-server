@@ -1,5 +1,15 @@
-<mat-selection-list #selectedLogs (selectionChange)="onNgModelChange($event)" [(ngModel)]="selectedOptions" multiple>
-    <mat-list-option *ngFor="let level of logLevels" [value]="level">
-        {{level}}
-    </mat-list-option>
-</mat-selection-list>
+<mat-card fxFlex class="log-level-filter-card">
+    <mat-card-header>
+        <mat-card-title>Log levels</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+        <mat-selection-list #selectedLogs (selectionChange)="onNgModelChange($event)" [(ngModel)]="selectedOptions"
+            multiple>
+            <mat-list-option *ngFor="let level of logLevels" [value]="level">
+                {{level}}
+            </mat-list-option>
+        </mat-selection-list>
+
+    </mat-card-content>
+</mat-card>

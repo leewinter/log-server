@@ -1,10 +1,20 @@
-<mat-list id="logStreamView" #logStreamView>
-    <mat-list-item *ngFor="let log of recentLogs" [ngClass]="log.classes">
-        <div class="mat-small">
-            <span id="log-time">{{moment(log.timestamp).format('MMMM Do YYYY, h:mm:ss a')}} </span>
-            -
-            <span [ngClass]="['log-level', log.level]">{{log.level}}</span>
-            - <span>{{log.msg}}</span>
-        </div>
-    </mat-list-item>
-</mat-list>
+<mat-card class="log-stream-card">
+    <mat-card-header>
+        <mat-card-title>Live logs</mat-card-title>
+        <mat-card-subtitle>Restricted view of logs</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+
+        <mat-list id="logStreamView" #logStreamView>
+            <mat-list-item *ngFor="let log of recentLogs" [ngClass]="log.classes">
+                <span class="mat-small">
+                    <span id="log-time">{{moment(log.timestamp).format('MMMM Do YYYY, h:mm:ss a')}} </span>
+                    -
+                    <span [ngClass]="['log-level', log.level]">{{log.level}}</span>
+                    - <span>{{log.msg}}</span>
+                </span>
+            </mat-list-item>
+        </mat-list>
+
+    </mat-card-content>
+</mat-card>

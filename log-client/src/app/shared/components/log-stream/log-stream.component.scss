@@ -1,4 +1,10 @@
 #logStreamView {
+  max-height: 470px;
+  overflow: auto;
+}
+
+#logStreamView .mat-list-item {
+  height: auto;
 }
 
 #log-time {
@@ -7,7 +13,7 @@
 
 .recently-added {
   animation-name: fade-background;
-  animation-duration: 2s;
+  animation-duration: 4s;
 }
 
 @keyframes fade-background {
