@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
 import { WebsocketService } from './services/websocket.service';
 import { LogStreamComponent } from './components/log-stream/log-stream.component';
 import { environment } from '../../environments/environment';
@@ -22,9 +23,10 @@ const config: SocketIoConfig = { url: environment.logServerUrl, options: {} };
     FormsModule,
     FlexLayoutModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatSelectModule
   ],
   providers: [WebsocketService, LogLevelService],
-  exports: [LogStreamComponent, LogLevelFilterComponent, ConnectedApisComponent, FlexLayoutModule, MatListModule, MatCardModule]
+  exports: [LogStreamComponent, LogLevelFilterComponent, ConnectedApisComponent, FlexLayoutModule, MatListModule, MatCardModule, MatSelectModule]
 })
 export class SharedModule { }

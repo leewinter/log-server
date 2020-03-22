@@ -2,6 +2,14 @@
     <mat-card-header>
         <mat-card-title>Live logs</mat-card-title>
         <mat-card-subtitle>Restricted view of logs</mat-card-subtitle>
+        <mat-form-field>
+            <mat-label>Queue Length</mat-label>
+            <mat-select [(ngModel)]="streamListLength" (selectionChange)="queueLengthChange($event)">
+              <mat-option *ngFor="let length of queueLengths" [value]="length">
+                {{length}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
     </mat-card-header>
     <mat-card-content>
 

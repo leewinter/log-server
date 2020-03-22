@@ -12,16 +12,22 @@ import * as moment from 'moment';
 })
 export class LogStreamComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
-  private streamListLength: number = 20;
+  streamListLength: number = 25;
+  queueLengths: number[] = [10 , 25, 50, 100, 500];
   moment: any = moment;
   recentLogs: WinstonLog[];
+
+  _logLevelFilter: string[];
   @Input('logLevelFilter')
   set logLevelFilter(value) {
-    this.socketService.filterResponseViaLogLevels(this.socketService.restrictQueueLength("winston-log", this.streamListLength), value)
+    this._logLevelFilter = value;
+    this.socketService.filterResponseViaLogLevels(this.socketService.restrictQueueLength("winston-log", this.streamListLength), this._logLevelFilter);
   }
+  _connectedApiFilter: string[];
   @Input('connectedApiFilter')
   set connectedApiFilter(value) {
-    this.socketService.filterResponseViaConnectedApis(this.socketService.restrictQueueLength("winston-log", this.streamListLength), value)
+    this._connectedApiFilter = value;
+    this.socketService.filterResponseViaConnectedApis(this.socketService.restrictQueueLength("winston-log", this.streamListLength), this._connectedApiFilter);
   }
 
   constructor(private socketService: WebsocketService) { }
@@ -38,6 +44,10 @@ export class LogStreamComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+  }
+
+  queueLengthChange(value) {
+    this.socketService.filterResponseViaLogLevels(this.socketService.restrictQueueLength("winston-log", this.streamListLength), this._logLevelFilter);
   }
 
   private highlightRecentLogs(messages: WinstonLog[]) {
