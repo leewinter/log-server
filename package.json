@@ -9,7 +9,8 @@
     "start:angular-dev": "dev-launch.sh",
     "start:clients": "node -r esm lib/examples/dev-launcher/index.js",
     "start:dev": "concurrently --kill-others \"npm run start:angular-dev\" \"npm run start:clients\" \"npm start\"",
-    "start": "node -r esm server/index.js"
+    "start": "node -r esm server/index.js",
+    "build": "build.sh"
   },
   "author": "Lee Winter",
   "license": "ISC",
