@@ -24,7 +24,7 @@ export class WebsocketService implements OnDestroy {
       this.socket.fromEvent(event.queueEvent).pipe(
         takeUntil(this.destroy$)
       ).subscribe((msg: object | WinstonLog) => {
-        this.pushWithLimit(event, this.mapQueueEvent(msg));
+        this.addToInternalQueue(event, this.mapQueueEvent(msg));
         this.filterAndPush(event)
       });
     });
@@ -42,7 +42,7 @@ export class WebsocketService implements OnDestroy {
     return queue;
   }
 
-  filterResponseViaConnectedApis(queue: EventQueue, connectedApis: string[]) {    
+  filterResponseViaConnectedApis(queue: EventQueue, connectedApis: string[]) {
     this.connectedApis = connectedApis;
     this.filterAndPush(queue);
     return queue;
@@ -69,7 +69,7 @@ export class WebsocketService implements OnDestroy {
         if (this.connectedApis.length) {
           connectedApiMatch = this.connectedApis.includes(n.sourceApi);
         }
-        
+
         return logLevelMatch && connectedApiMatch;
       } else {
         return true;
@@ -89,10 +89,15 @@ export class WebsocketService implements OnDestroy {
     return message;
   }
 
-  private pushWithLimit(event: EventQueue, msg: any) {
+  private addToInternalQueue(event: EventQueue, msg: any) {
     // Handle arrays or single objects
     if (Array.isArray(msg)) {
-      event.queue = event.queue.concat(msg);
+      // If an array of APIs just override what we already had
+      if (msg.length && msg[0] instanceof ConnectedApi) {
+        event.queue = msg;
+      } else {
+        event.queue = event.queue.concat(msg);
+      }
     } else {
       event.queue.push(msg);
     }
