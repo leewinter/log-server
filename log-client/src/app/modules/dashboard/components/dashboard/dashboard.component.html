@@ -1,13 +1,21 @@
 <div id="main" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
     <div fxFlex="20%" fxLayout="column" fxLayoutGap="5px">
         <div fxFlex>
-            <app-log-level-filter class="fill-container" (selectedLogsChanged)="selectedLogsChanged($event)"></app-log-level-filter>
+            <app-log-level-filter class="fill-container" (selectedLogsChanged)="selectedLogsChanged($event)">
+            </app-log-level-filter>
         </div>
         <div fxFlex>
-            <app-connected-apis class="fill-container" (selectedApisChanged)="selectedApisChanged($event)"></app-connected-apis>
-        </div>      
+            <app-connected-apis class="fill-container" (selectedApisChanged)="selectedApisChanged($event)">
+            </app-connected-apis>
+        </div>
     </div>
-    <div fxFlex="80%">
-        <app-log-stream class="fill-container" [(logLevelFilter)]="logLevelFilter" [(connectedApiFilter)]="connectedApiFilter"></app-log-stream>
-    </div>    
+    <div fxFlex="80%" fxLayout="column" fxLayoutGap="5px">
+        <div fxFlex>
+            <app-log-stream-grpah></app-log-stream-grpah>
+        </div>
+        <div fxFlex>
+            <app-log-stream class="fill-container" [(logLevelFilter)]="logLevelFilter"
+                [(connectedApiFilter)]="connectedApiFilter"></app-log-stream>
+        </div>
+    </div>
 </div>
