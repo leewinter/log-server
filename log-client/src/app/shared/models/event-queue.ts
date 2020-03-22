@@ -28,12 +28,15 @@ export class ConnectedApi {
     // Instance checker
     static [Symbol.hasInstance](obj) {
         if (!obj.url) return false;
+        if(!obj.humanLogsUrl) return false;
         return true;
     }
     constructor(obj){
         this.url = obj.url;
+        this.humanLogsUrl = obj.humanLogsUrl;
     }
     url: string;
+    humanLogsUrl: string;
 }
 
 export interface EventQueue {

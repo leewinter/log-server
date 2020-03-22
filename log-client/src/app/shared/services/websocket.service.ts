@@ -80,11 +80,14 @@ export class WebsocketService implements OnDestroy {
   }
 
   private mapQueueEvent(event: any) {
-    let message = event;
+    let message = event;    
     if (event instanceof WinstonLog) {
       message = new WinstonLog(event);
-    } else if (event instanceof ConnectedApi) {
-      message = new ConnectedApi(event);
+    } else if (Array.isArray(event)) {
+      // Handle array mappings
+      if (event.length && event[0] instanceof ConnectedApi) {
+        message = event.map(n => new ConnectedApi(n));
+      }
     }
     return message;
   }

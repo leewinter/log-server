@@ -52,7 +52,7 @@ const winstonLogEvent = socket => {
     const sourceApi = connectedApis.get(socket.id);
     msg.sourceApi = sourceApi ? sourceApi.winstonTransportOptions.apiUrl : socket.id;
     emitToNoneApiClients('winston-log', msg);
-    console.info(`winston-log`, msg);
+    //console.info(`winston-log`, msg);
   });
 };
 // If client is also an API remove from list
