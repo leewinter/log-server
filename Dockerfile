@@ -1,4 +1,4 @@
-FROM node:9.11-slim
+FROM node:13.10.1-buster-slim
 
 MAINTAINER Lee Winter
 
@@ -8,9 +8,11 @@ MAINTAINER Lee Winter
 ARG NPM_TOKEN
 
 COPY . /var/www
+WORKDIR /var/www/log-client
+RUN npm install \ 
+    && npm run build
 WORKDIR /var/www
-
-CMD build.sh
+RUN npm install
 
 #EXPOSE $PORT
 

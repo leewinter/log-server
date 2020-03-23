@@ -2,5 +2,5 @@
 
 cd ./log-client
 npm install
-ng build --prod
+npm run build
 # cp -R dist/ path_to_destination/
