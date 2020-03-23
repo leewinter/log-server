@@ -31,6 +31,7 @@ export class ConnectedApisComponent implements OnInit, OnDestroy {
     this.socketService.restrictQueueLength("get-connected-apis", this.streamListLength).pushedQueue$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((apis: ConnectedApi[]) => {
+      apis.forEach(n => n.humanLogsUrl = this.getLogsUrl(n));
       this.connectedApis = apis;
       this.initialiseFilter(apis);
     });
@@ -46,6 +47,12 @@ export class ConnectedApisComponent implements OnInit, OnDestroy {
       this.selectedOptions = apis;
       this.selectedApisChanged.emit(this.selectedOptions.map(n => n.url));
     }
+  }
+
+  getLogsUrl(api: ConnectedApi) {
+    let url = api.url + (api.humanLogsUrl.startsWith('/') ? api.humanLogsUrl : `/${api.humanLogsUrl}`);
+    url = url.replace('http://', '').replace('https://', '').replace('//', '/');
+    return api.url.indexOf('https://') > 0 ? `https://${url}` : `http://${url}`;
   }
 
 }
