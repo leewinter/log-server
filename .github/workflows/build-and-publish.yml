@@ -19,7 +19,6 @@ jobs:
             - {name: 'npm install ${{ matrix.node-version }}', uses: actions/setup-node@v1, with: {node-version: '${{ matrix.node-version }}'}}
             - {run: 'npm ci'}
             - {run: 'npm test'}
-            - {run: 'npm run build'}
             - {name: 'docker build', run: 'docker build -t leewinter/logserver .'}
             - {name: 'docker login', run: 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD', env: {DOCKER_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}', DOCKER_USERNAME: '${{ secrets.DOCKER_USERNAME }}'}}
             - {name: 'docker push', run: 'docker push leewinter/logserver'}
