@@ -10,8 +10,7 @@ ARG NPM_TOKEN
 COPY . /var/www
 WORKDIR /var/www
 
-RUN npm install
-RUN npm run build
+CMD build.sh
 
 #EXPOSE $PORT
 
