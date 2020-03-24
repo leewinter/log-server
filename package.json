@@ -6,15 +6,14 @@
   "scripts": {
     "test": "echo \"Fix test result for now\" && exit 0",
     "preinstall": "npm install --ignore-scripts",
-    "start:clients": "nodemon -r esm lib/examples/dev-launcher/index.js",
-    "start:dev": "parallelshell \"npm start\" \"npm run start:clients\"",
+    "start:angular-dev": "dev-launch.sh",
+    "start:clients": "node -r esm lib/examples/dev-launcher/index.js",
+    "start:dev": "concurrently --kill-others \"npm run start:angular-dev\" \"npm run start:clients\" \"npm start\"",
     "start": "node -r esm server/index.js"
   },
   "author": "Lee Winter",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "chart.js": "^2.9.3",
     "eslint": "~4.18.2",
     "eslint-config-airbnb-base": "^4.0.0",
     "eslint-config-bravissimo": "^1.0.1",
@@ -22,12 +21,13 @@
     "eslint-plugin-import": "^1.6.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "jquery": "^3.4.1",
-    "loadash": "^1.0.0",
+    "forever": "^2.0.0",
+    "moment": "^2.24.0",
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "concurrently": "^5.1.0",
     "date-fns": "^2.10.0",
     "parallelshell": "^3.0.1",
     "socket.io-client": "^2.3.0",
