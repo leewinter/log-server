@@ -14,7 +14,8 @@ export class WebsocketService implements OnDestroy {
     { queueEvent: "winston-log", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<WinstonLog[]>([]) },
     { queueEvent: "api-connected", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) },
     { queueEvent: "api-disconnected", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<object[]>([]) },
-    { queueEvent: "get-connected-apis", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<ConnectedApi[]>([]) }
+    { queueEvent: "get-connected-apis", queue: [], queueLength: 100, pushedQueue$: new BehaviorSubject<ConnectedApi[]>([]) },
+    { queueEvent: "get-historic-winston-logs", queue: [], queueLength: 500, pushedQueue$: new BehaviorSubject<WinstonLog[]>([]) }
   ];
   logLevels: string[] = [];
   connectedApis: string[] = [];
@@ -27,6 +28,14 @@ export class WebsocketService implements OnDestroy {
         this.addToInternalQueue(event, this.mapQueueEvent(msg));
         this.filterAndPush(event)
       });
+    });
+
+    let logEvent = this.messageQueues.find(n => n.queueEvent === "winston-log");
+    this.messageQueues.find(n => n.queueEvent === "get-historic-winston-logs").pushedQueue$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((messages: WinstonLog[]) => {
+      var test = messages.map(this.mapQueueEvent);
+      this.addToInternalQueue(logEvent, messages.map(this.mapQueueEvent));
     });
   }
 
@@ -80,7 +89,7 @@ export class WebsocketService implements OnDestroy {
   }
 
   private mapQueueEvent(event: any) {
-    let message = event;    
+    let message = event;
     if (event instanceof WinstonLog) {
       message = new WinstonLog(event);
     } else if (Array.isArray(event)) {
@@ -98,7 +107,10 @@ export class WebsocketService implements OnDestroy {
       // If an array of APIs just override what we already had
       if (msg.length && msg[0] instanceof ConnectedApi) {
         event.queue = msg;
-      } else {
+      } else if (msg.length && msg[0] instanceof WinstonLog) {
+        event.queue = event.queue.concat(msg).sort((a, b) => a.timestamp - b.timestamp);
+      }
+      else {
         event.queue = event.queue.concat(msg);
       }
     } else {

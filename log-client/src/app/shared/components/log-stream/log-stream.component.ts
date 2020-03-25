@@ -12,8 +12,8 @@ import * as moment from 'moment';
 })
 export class LogStreamComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
-  streamListLength: number = 25;
-  queueLengths: number[] = [10 , 25, 50, 100, 500];
+  streamListLength: number = 500;
+  queueLengths: number[] = [10, 25, 50, 100, 500];
   moment: any = moment;
   recentLogs: WinstonLog[];
 
@@ -39,6 +39,8 @@ export class LogStreamComponent implements OnInit, OnDestroy {
       this.highlightRecentLogs(messages);
       this.recentLogs = messages.reverse();
     });
+    
+    this.socketService.emit('get-historic-winston-logs', { queueLength: this.streamListLength });
   }
 
   ngOnDestroy(): void {
@@ -51,7 +53,7 @@ export class LogStreamComponent implements OnInit, OnDestroy {
   }
 
   private highlightRecentLogs(messages: WinstonLog[]) {
-    const newLogs = messages.filter(n => n.timestamp.isAfter(moment().add(-2,'seconds')) );
+    const newLogs = messages.filter(n => n.timestamp.isAfter(moment().add(-2, 'seconds')));
     messages.forEach(element => {
       if (newLogs.map(i => i.timestamp).includes(element.timestamp)) {
         element.classes.push("recently-added");

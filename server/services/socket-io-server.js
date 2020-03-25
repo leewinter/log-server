@@ -1,4 +1,7 @@
 import io from 'socket.io';
+import Datastore from 'nedb';
+
+const db = new Datastore({ filename: __dirname + '/../datastore/logs', autoload: true });
 
 // Browsers and APIs
 let connectedClients = new Map();
@@ -51,10 +54,22 @@ const winstonLogEvent = socket => {
   socket.on('winston-log', msg => {
     const sourceApi = connectedApis.get(socket.id);
     msg.sourceApi = sourceApi ? sourceApi.winstonTransportOptions.apiUrl : socket.id;
-    emitToNoneApiClients('winston-log', msg);
+    db.insert(msg, (err, newMsg) => {
+      emitToNoneApiClients('winston-log', newMsg);
+      if (err) console.error(err);
+    })
     //console.info(`winston-log`, msg);
   });
 };
+//
+const getHistoricWinstonLogEvents = socket => {
+  socket.on('get-historic-winston-logs', msg => {
+    db.find({}).sort({ timestamp: -1 }).limit(msg.queueLength).exec((err, docs) => {
+      emitToNoneApiClients('get-historic-winston-logs', docs);
+      if (err) console.error(err);
+    });
+  });
+}
 // If client is also an API remove from list
 const disconnectApiEvent = socket => {
   if (connectedApis.get(socket.id)) {
@@ -83,6 +98,7 @@ const init = port => {
     disconnectClientEvent(socket);
     winstonLogEvent(socket);
     getAllConnectedApisEvent(socket);
+    getHistoricWinstonLogEvents(socket);
   });
 };
 
