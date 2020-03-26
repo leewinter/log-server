@@ -12,7 +12,8 @@
     "start:clients-dev": "node -r esm lib/examples/dev-launcher/index.js",
     "start:dev": "concurrently --kill-others \"npm run start:angular-dev\" \"npm run start:clients-dev\" \"npm run start:server-dev\"",
     "start:dev-mac": "concurrently --kill-others \"npm run start:angular-dev-mac\" \"npm run start:clients-dev\" \"npm run start:server-dev\"",
-    "start": "node -r esm server/index.js"
+    "start": "node -r esm server/index.js",
+    "postinstall": "cd log-client && npm install"
   },
   "author": "Lee Winter",
   "license": "ISC",
