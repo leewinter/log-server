@@ -26,7 +26,7 @@ export class WebsocketService implements OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe((msg: object | WinstonLog) => {
         this.addToInternalQueue(event, this.mapQueueEvent(msg));
-        this.filterAndPush(event)
+        this.filterAndPush(event);
       });
     });
 
@@ -34,8 +34,8 @@ export class WebsocketService implements OnDestroy {
     this.messageQueues.find(n => n.queueEvent === "get-historic-winston-logs").pushedQueue$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((messages: WinstonLog[]) => {
-      var test = messages.map(this.mapQueueEvent);
       this.addToInternalQueue(logEvent, messages.map(this.mapQueueEvent));
+      this.filterAndPush(logEvent);
     });
   }
 
