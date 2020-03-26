@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "log-client"
+    }
+  },
+  "defaultProject": "log-client",
+  "cli": {
+    "analytics": false
+  }
 }
