@@ -1,7 +1,8 @@
-import express from'express';
+import express from 'express';
 import http from 'http';
 import path from 'path';
 import init from './services/socket-io-server';
+const historyRoute = require('./routes/history')
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', express.static(publicDirectory));
+
+app.use(historyRoute);
 
 const serverPort = process.env.PORT || 3000;
 server.listen(serverPort, () => {

@@ -13,7 +13,7 @@ import * as moment from 'moment';
 export class LogStreamComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   streamListLength: number = 500;
-  queueLengths: number[] = [10, 25, 50, 100, 500];
+  queueLengths: number[] = [10, 25, 50, 100, 500, 1000, 5000];
   moment: any = moment;
   recentLogs: WinstonLog[];
 
@@ -39,7 +39,7 @@ export class LogStreamComponent implements OnInit, OnDestroy {
       this.highlightRecentLogs(messages);
       this.recentLogs = messages.reverse();
     });
-    
+
     this.socketService.emit('get-historic-winston-logs', { queueLength: this.streamListLength });
   }
 
