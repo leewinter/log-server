@@ -1,7 +1,8 @@
-a {
-    color: white;
+a{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
 }
-
 a:visited {
     color: #ff4081;
 }

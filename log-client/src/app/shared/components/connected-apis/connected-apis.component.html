@@ -5,8 +5,9 @@
     <mat-card-content>
 
         <mat-selection-list (selectionChange)="onNgModelChange($event)" [(ngModel)]="selectedOptions" multiple>
-            <mat-list-option *ngFor="let api of connectedApis" [value]="api">             
-                <a *ngIf="api.humanLogsUrl" href="{{api.humanLogsUrl}}">{{api.url}}</a>
+            <mat-list-option *ngFor="let api of connectedApis" [value]="api">
+                <a *ngIf="api.humanLogsUrl" href="{{api.humanLogsUrl}}"
+                    style="color: white !important;">{{api.url}}justtomakeitlongerIdidthis</a>
                 <span *ngIf="!api.humanLogsUrl">{{api.url}}</span>
             </mat-list-option>
         </mat-selection-list>
