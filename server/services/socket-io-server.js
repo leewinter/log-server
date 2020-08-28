@@ -1,7 +1,5 @@
 import io from 'socket.io';
-import Datastore from 'nedb';
-
-const db = new Datastore({ filename: __dirname + '/../datastore/logs', autoload: true });
+import db from './datastore'
 
 // Browsers and APIs
 let connectedClients = new Map();
@@ -85,8 +83,6 @@ const disconnectClientEvent = socket => {
     connectedClients.delete(socket.id);
     console.info(`Client disconnect [id=${socket.id}]`);
     disconnectApiEvent(socket);
-    console.log('connectedApis', Array.from(connectedApis).length);
-    console.log('connectedClients', Array.from(connectedClients).length);
   });
 };
 
