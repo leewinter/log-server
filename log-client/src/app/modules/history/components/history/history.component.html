@@ -1,0 +1,31 @@
+<div id="main" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+    <div fxFlex="20%" fxLayout="column" fxLayoutGap="5px">
+        <div fxFlex>
+            <label for="startTime">Start Time</label>
+            <input name="startTime" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start Time"
+                (dateTimeChange)="startTimeChange($event)">
+            <owl-date-time #dt1></owl-date-time>
+            <br>
+            <label for="endTime">End Time</label>
+            <input name="endTime" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="End Time"
+                (dateTimeChange)="endTimeChange($event)">
+            <owl-date-time #dt2></owl-date-time>
+            <br>
+            <button [disabled]="!startTime || ! endTime" type="button" (click)="getLogs()">Get logs</button>
+        </div>
+    </div>
+    <div fxFlex="80%" fxLayout="column" fxLayoutGap="5px">
+        <div fxFlex>
+            <mat-list id="logStreamView" #logStreamView>
+                <mat-list-item *ngFor="let log of logsToDisplay" [ngClass]="log.classes">
+                    <span class="mat-small">
+                        <span id="log-time">{{moment(log.timestamp).format('MMMM Do YYYY, h:mm:ss a')}} </span>
+                        -
+                        <span [ngClass]="['log-level', log.level]">{{log.level}}</span>
+                        - <span>{{log.msg}}</span>
+                    </span>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</div>

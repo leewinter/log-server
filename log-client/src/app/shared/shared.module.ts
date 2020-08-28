@@ -22,7 +22,8 @@ const config: SocketIoConfig = { url: environment.production ? window.location.h
     LogStreamComponent,
     LogLevelFilterComponent,
     ConnectedApisComponent,
-    LogStreamGrpahComponent],
+    LogStreamGrpahComponent
+  ],
   imports: [
     CommonModule,
     SocketIoModule.forRoot(config),
@@ -45,6 +46,7 @@ const config: SocketIoConfig = { url: environment.production ? window.location.h
     MatListModule,
     MatCardModule,
     MatSelectModule,
-    ChartsModule]
+    ChartsModule
+  ]
 })
 export class SharedModule { }

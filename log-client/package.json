@@ -24,6 +24,7 @@
     "@angular/router": "~9.0.6",
     "chart.js": "^2.9.3",
     "lodash": "^4.17.15",
+    "ng-pick-datetime": "^7.0.0",
     "ng2-charts": "^2.3.0",
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.4",
