@@ -5,7 +5,8 @@
             </app-log-level-filter>
         </div>
         <div fxFlex>
-            <app-connected-apis class="fill-container" (selectedApisChanged)="selectedApisChanged($event)">
+            <app-connected-apis class="fill-container" [defaultSelectAll]="true"
+                (selectedApisChanged)="selectedApisChanged($event)">
             </app-connected-apis>
         </div>
     </div>

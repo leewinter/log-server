@@ -83,8 +83,6 @@ const disconnectClientEvent = socket => {
     connectedClients.delete(socket.id);
     console.info(`Client disconnect [id=${socket.id}]`);
     disconnectApiEvent(socket);
-    console.log('connectedApis', Array.from(connectedApis).length);
-    console.log('connectedClients', Array.from(connectedClients).length);
   });
 };
 

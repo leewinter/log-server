@@ -11,10 +11,9 @@ export function getAllLogs() {
     })
 }
 
-export function getLogWindow(apiName, startTimeStamp, endTimeStamp) {
+export function getLogWindow(startTimeStamp, endTimeStamp) {
     return new Observable(subscriber => {
         db.find({
-            sourceApi: apiName,
             timestamp: {
                 $gte: startTimeStamp,
                 $lte: endTimeStamp,

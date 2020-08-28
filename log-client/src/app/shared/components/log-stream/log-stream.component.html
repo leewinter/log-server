@@ -5,24 +5,13 @@
         <mat-form-field>
             <mat-label>Queue Length</mat-label>
             <mat-select [(ngModel)]="streamListLength" (selectionChange)="queueLengthChange($event)">
-              <mat-option *ngFor="let length of queueLengths" [value]="length">
-                {{length}}
-              </mat-option>
+                <mat-option *ngFor="let length of queueLengths" [value]="length">
+                    {{length}}
+                </mat-option>
             </mat-select>
-          </mat-form-field>
+        </mat-form-field>
     </mat-card-header>
     <mat-card-content>
-
-        <mat-list id="logStreamView" #logStreamView>
-            <mat-list-item *ngFor="let log of recentLogs" [ngClass]="log.classes">
-                <span class="mat-small">
-                    <span id="log-time">{{moment(log.timestamp).format('MMMM Do YYYY, h:mm:ss a')}} </span>
-                    -
-                    <span [ngClass]="['log-level', log.level]">{{log.level}}</span>
-                    - <span>{{log.msg}}</span>
-                </span>
-            </mat-list-item>
-        </mat-list>
-
+        <app-log-list [logsToDisplay]="recentLogs"></app-log-list>
     </mat-card-content>
 </mat-card>

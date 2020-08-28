@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { WebsocketService } from '../../services/websocket.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +15,8 @@ export class ConnectedApisComponent implements OnInit, OnDestroy {
   private streamListLength: number = 20;
   private filtersInitialised: boolean = false;
   connectedApis: ConnectedApi[];
-  selectedOptions: ConnectedApi[];
+  selectedOptions: ConnectedApi[] = [];
+  @Input() defaultSelectAll: boolean;
   @Output()
   selectedApisChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
@@ -44,7 +45,11 @@ export class ConnectedApisComponent implements OnInit, OnDestroy {
 
   initialiseFilter(apis) {
     if (!this.filtersInitialised) {
-      this.selectedOptions = apis;
+
+      if (this.defaultSelectAll) {
+        this.selectedOptions = apis;
+      }
+
       this.selectedApisChanged.emit(this.selectedOptions.map(n => n.url));
     }
   }

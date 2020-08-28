@@ -14,7 +14,6 @@ export class LogStreamComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
   streamListLength: number = 500;
   queueLengths: number[] = [10, 25, 50, 100, 500, 1000, 5000];
-  moment: any = moment;
   recentLogs: WinstonLog[];
 
   _logLevelFilter: string[];

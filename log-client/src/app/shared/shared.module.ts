@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConnectedApisComponent } from './components/connected-apis/connected-apis.component';
 import { LogStreamGrpahComponent } from './components/log-stream-grpah/log-stream-grpah.component';
+import { LogListComponent } from './components/log-stream/log-list/log-list.component';
 
 const config: SocketIoConfig = { url: environment.production ? window.location.href : environment.logServerUrl, options: {} };
 
@@ -22,7 +23,8 @@ const config: SocketIoConfig = { url: environment.production ? window.location.h
     LogStreamComponent,
     LogLevelFilterComponent,
     ConnectedApisComponent,
-    LogStreamGrpahComponent
+    LogStreamGrpahComponent,
+    LogListComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ const config: SocketIoConfig = { url: environment.production ? window.location.h
     LogLevelFilterComponent,
     ConnectedApisComponent,
     LogStreamGrpahComponent,
+    LogListComponent,
     FlexLayoutModule,
     MatListModule,
     MatCardModule,
