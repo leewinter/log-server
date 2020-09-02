@@ -1,7 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,6 @@ export class HistoryService {
       startTimeStamp,
       endTimeStamp
     }
-    return this.http.get(`http://localhost:3000/history/`, { params });
+    return this.http.get(`${environment.logServerUrl}/history`, { params });
   }
 }
