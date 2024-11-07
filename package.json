@@ -25,7 +25,7 @@
     "eslint-plugin-import": "^1.6.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "forever": "^2.0.0",
+    "forever": "^4.0.3",
     "moment": "^2.24.0",
     "nedb": "^1.8.0",
     "nodemon": "^2.0.2",
